@@ -1,12 +1,42 @@
-# UoG-QC-Assignment
-University of Glasgow course Quantum Computing (H)
+# UoG Quantum Computing Assignment (BB84)
 
-This repository is a template for the assessed exercise for the course Quantum Computing (H) at the University of Glasgow, School of Computing Science.
+This repository contains a BB84 quantum key distribution simulation for the University of Glasgow Quantum Computing (H) assignment.
 
-Create your own repository as a copy of the template, then work on the exercise.
+## Files
 
-To submit the exercise, give Simon Gay access to your repository (user name: SimonGay)
+- `BB84-Plain.ipynb`: BB84 protocol without an attacker.
+- `BB84-Attacker.ipynb`: BB84 with Eve's intercept-resend attack, including statistical detection analysis and a partial-attack extension.
+- `assignment.pdf`: assignment brief.
 
-As usual, you can use the "Launch in qBraid" button to open your repository within the qBraid environment.
+## What Was Implemented
 
-[<img src="https://qbraid-static.s3.amazonaws.com/logos/Launch_on_qBraid_white.png" width="150">](https://account.qbraid.com?gitHubUrl=https://github.com/SimonGay/UoG-QC-Assignment.git)
+1. Plain BB84 flow:
+- Alice prepares random bits and random bases.
+- Bob measures with random bases.
+- Alice and Bob sift matching-basis positions and derive identical keys.
+
+2. Intercept-resend attacker:
+- Eve measures and resends qubits.
+- Alice and Bob sample sifted bits and estimate error rate.
+- Attack is detected when sampled error exceeds a threshold.
+
+3. Partial attack extension:
+- Eve intercepts each qubit with probability `intercept_fraction`.
+- In noiseless BB84, expected sifted-key error rate is approximately:
+  `error_rate ≈ 0.25 × intercept_fraction`.
+- Simulations show measured averages close to this trend.
+
+## Typical Results
+
+- Plain BB84: Alice and Bob derive matching sifted keys.
+- Full intercept-resend (`intercept_fraction = 1.0`): error rate near 25%, high detection probability.
+- Partial intercepts: lower error rates and lower detection probability for fixed threshold/sample size.
+
+## Running
+
+Open and run notebook cells in order:
+
+1. `BB84-Plain.ipynb`
+2. `BB84-Attacker.ipynb`
+
+The notebooks print per-run tables plus aggregate detection/error statistics.
